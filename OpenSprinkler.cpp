@@ -52,6 +52,14 @@ byte OpenSprinkler::water_percent_avg;
 
 char tmp_buffer[TMP_BUFFER_SIZE+1];       // scratch buffer
 
+#if defined(ACTIVE_LOW)
+#define SPRINKLER_ON	LOW
+#define SPRINKLER_OFF	HIGH
+#else
+#define SPRINKLER_ON	HIGH
+#define SPRINKLER_OFF	LOW
+#endif
+
 #if defined(ARDUINO)
   prog_char wtopts_name[] PROGMEM = WEATHER_OPTS_FILENAME;
 #else
@@ -574,9 +582,9 @@ void OpenSprinkler::apply_all_station_bits() {
     for(s=0;s<8;s++) {
       digitalWrite(PIN_SR_CLOCK, LOW);
 #if defined(OSPI) // if OSPi, use dynamically assigned pin_sr_data
-      digitalWrite(pin_sr_data, (sbits & ((byte)1<<(7-s))) ? HIGH : LOW );
+      digitalWrite(pin_sr_data, (sbits & ((byte)1<<(7-s))) ? SPRINKLER_ON : SPRINKLER_OFF );
 #else      
-      digitalWrite(PIN_SR_DATA, (sbits & ((byte)1<<(7-s))) ? HIGH : LOW );
+      digitalWrite(PIN_SR_DATA, (sbits & ((byte)1<<(7-s))) ? SPRINKLER_ON : SPRINKLER_OFF );
 #endif
       digitalWrite(PIN_SR_CLOCK, HIGH);
     }

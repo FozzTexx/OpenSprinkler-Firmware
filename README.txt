@@ -23,6 +23,10 @@ For OSPi (OpenSprinkler Pi):
 
 Run build script ./build.sh ospi
 
+For OSPi with relays that are active low:
+
+Run build script ./build.sh ospi_low
+
 --------------------------------------------
 
 For OSBo (OpenSprinkler Beagle):
